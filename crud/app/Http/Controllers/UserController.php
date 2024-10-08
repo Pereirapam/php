@@ -29,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user_create');
     }
 
     /**
@@ -37,7 +37,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $created = $this->user->create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => password_hash($request->input('password'), PASSWORD_DEFAULT),
+        ]);
+
+        if($created) {
+            return redirect()->back()->with('message', 'Sucessfuly create');
+    }
+        return redirect()->back()->with('message', 'Erro create');
     }
 
     /**
@@ -63,9 +72,9 @@ class UserController extends Controller
     {
         $updated = $this->user->where('id', $id)->update($request->except(['_token', '_method']));
         if($updated) {
-                return redirect()->back()->with('message', 'sucessfuly update');
+                return redirect()->back()->with('message', 'Scessfuly update');
         }
-            return redirect()->back()->with('message', 'Erro');
+            return redirect()->back()->with('message', 'Erro update');
     }
 
     /**
