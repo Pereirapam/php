@@ -63,9 +63,9 @@ class UserController extends Controller
     {
         $updated = $this->user->where('id', $id)->update($request->except(['_token', '_method']));
         if($updated) {
-                
+                return redirect()->back()->with('message', 'sucessfuly update');
         }
-        // var_dump($request->except(['_token', '_method']));
+            return redirect()->back()->with('message', 'Erro');
     }
 
     /**
